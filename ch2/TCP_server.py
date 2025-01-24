@@ -1,8 +1,8 @@
 import socket
 import threading
 
-IP = "192.168.112.159"
-PORT = 9998
+IP = "192.168.0.102"
+PORT = 9997
 
 def main():
     # create a socket object
