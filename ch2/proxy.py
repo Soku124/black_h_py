@@ -14,12 +14,11 @@ def hexdump(src, length =16, show=True):
     for i in range(0, len(src), length):
         word = str(src[i:i+length])
         
-        printtable = word.translate(HEX_FILTER)
-        hexa = ' '.join([f' {ord(c):02x} for c in word'])
+        printtable = word.translate(HEX_FILTER) # --
+        hexa = ' '.join([f' {ord(c):02x}' for c in word])
         hexwidth = length*3
 
-        results.append(f'{i:04x} {hexa:<{hexwidth}}
-                        {printtable}' )
+        results.append(f'{i:04x} {hexa:<{hexwidth}} {printtable}' )
         
         if show:
             for line in results:
@@ -129,3 +128,31 @@ def server_loop(local_host, local_port, remote_host, remote_port, receive_first)
 
 
 
+def main():
+    if len(sys.argv[1:]) != 5:
+        print("Usage: ./proxy.py [localhost] [localport]", end='')
+        
+        print("[remotehost] [remoteport] [receive_first]")
+
+        print("Example: ./proxy.py 127.0.0.1 9000 10.12.132.1 9000 True")
+
+        sys.exit()
+    
+    local_host = sys.argv[1]
+    local_port = int(sys.argv[2])
+
+    remote_host = sys.argv[3]
+    remote_port = int(sys.argv[4])
+
+    receive_first = sys.argv[5]
+
+    if "True" in receive_first:
+        receive_first = True
+    else:
+        receive_first = False
+    
+    server_loop(local_host= local_host, local_port=local_port, remote_host=remote_host, remote_port=remote_port, receive_first=receive_first)
+
+
+if __name__ == '__main__':
+    main()
